@@ -1,0 +1,15 @@
+{
+  "name": "dsite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "run": "node ./src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@daily-co/daily-js": "^0.21.0",
+    "express": "^4.17.1"
+  }
+}

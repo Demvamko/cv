@@ -1,0 +1,21 @@
+@font-face {
+    font-family: "RobotoThin";
+    src: url('/fonts/Roboto-Thin.ttf');
+}
+
+
+.rg{
+    background: radial-gradient(#22222200, #111111ff);
+}
+
+.fntd1{
+    font-family: 'RobotoThin';
+}
+
+.fntd2{
+    font-family: 'Futura LT Regular' !important;
+}
+
+.vid{
+    width: 15vw;
+}

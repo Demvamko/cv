@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrija Kovač</title>
+    <link rel="stylesheet" href="/css/arch.css">
+    <link rel="stylesheet" href="/css/ddark.css">
+    <link rel="stylesheet" href="/css/dsite.css">
+</head>
+
+<body class="col">
+    <div class="layer rg"></div>
+
+    <div class="col z10" style="margin: 5% 15%;">
+        <div class="row">
+            <div>
+                <img src="/img/Logo.png" class="fit" />
+            </div>
+            <div class="col" style="width: 100%; background-color: #00000044; padding: 20px;">
+                <div class="row jc">
+                    <video class="m5 b2 vid" id="video0"></video>
+                    <video class="m5 b2 vid" id="video1"></video>
+                </div>
+                <div class="row jc">
+                    <video class="m5 b2 vid" id="video2"></video>
+                    <video class="m5 b2 vid" id="video3"></video>
+                </div>
+                <div class="row jc m5c">
+                    <button class="p10 b3" onclick="CreateRoom()">Create Room</button>
+                    <button class="p10 b3" onclick="JoinRoom()">Join Room</button>
+                    <button class="p10 b3" onclick="StartCamera()">Start Camera</button>
+                    <button class="p10 b3" onclick="StartAudio()">Start Audio</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script crossorigin src="https://unpkg.com/@daily-co/daily-js"></script>
+<script src="/js/daily.js"></script>
+
+</html>
