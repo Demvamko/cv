@@ -56,10 +56,12 @@ a{
 .cblue { color: #69F; }
 
 /* Borders */
+.bn{ border: none; }
 .bt{ border-top: 1px solid #FFF; }
 .bl{ border-left: 1px solid #FFF; }
 .br{ border-right: 1px solid #FFF; }
 .bb{ border-bottom: 1px solid #FFF; }
+.ba{ border: 1px solid #FFF}
 
 .bc0{ border-color: #000; }
 .bc1{ border-color: #333; }

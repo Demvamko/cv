@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrija Kovač</title>
+    <link rel="stylesheet" href="/css/arch.css">
+    <link rel="stylesheet" href="/css/ddark.css">
+    <link rel="stylesheet" href="/css/dsite.css">
+    <link rel="stylesheet" href="/fonts/futura/style.css">
+</head>
+
+<body class="col b2">
+
+    <div class="bt bc2 m5">
+        <p class="code c1"> The same shadpw dom element inside an iFrame </p>
+
+        <div class="p10 b3">
+            <div class="code c2 fsz15 p10">Hello (class: code c2 fsz15 p10)</div>
+
+            <div>
+                <template shadowroot="open">
+                    <div class="code c2 fsz15 p10">Shadow DOM element</div>
+                    <div class="code c2 fsz15 p10">Hello (class: code c2 fsz15 p10)</div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <div class="bt bc2 m5">
+        <p class="code c1"> The same shadpw dom element inside an iFrame </p>
+
+        <div class="p10 b3">
+            <iframe class="bn pt10 w50vw ba bc2" src="/html/shadow.html"></iframe>
+        </div>
+    </div>
+
+    
+
+</body>
+
+</html>
