@@ -40,13 +40,14 @@ button{ border: none; }
 .m5b{ margin-bottom: 5px; }
 
 .mav{ margin: auto 0px; }
-.mah{ margin: auto 0px; }
+.mah{ margin: 0px auto; }
 
 /* Alignings */
 
 .ac{ align-self: center; }
 .aic {align-items: center;}
 .tac{ text-align: center; }
+.tal{ text-align: left; }
 .tar{ text-align: right; }
 .js{ justify-content: flex-start;}
 .jc{ justify-content: center; }

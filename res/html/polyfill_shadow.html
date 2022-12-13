@@ -26,6 +26,19 @@
         </div>
     </div>
 
+
+    <script>
+        function AttachShadowRoot(element){
+            const mode = element.getAttribute('shadowroot');
+            const shadow = element.parentNode.attachShadow({mode});
+
+            shadow.appendChild(element.content);
+            element.remove();
+        }
+
+        document.querySelectorAll('template[shadowroot]').forEach(AttachShadowRoot)
+    </script>
+
 </body>
 
 </html>
