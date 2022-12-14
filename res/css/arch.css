@@ -91,6 +91,8 @@ button{ border: none; }
 .w25vw{ width: 25vw; }
 .w12vw{ width: 12.5vw; }
 
+.w100p{ width: 100%; }
+
 /* Positions */
 .rel{ position: relative; }
 .abs{ position: absolute; }

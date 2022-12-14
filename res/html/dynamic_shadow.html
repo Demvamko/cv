@@ -13,10 +13,26 @@
 </head>
 
 <body>
-    <template shadowroot="open">
-        <div class="code c2 fsz15 p10">Shadow DOM element</div>
-        <div class="code c2 fsz125 p10">Class on this element is: "code c2 fsz125 p10"</div>
-    </template>
+
+
+    <div class="p10 b3">
+        <div id="container">
+        </div>
+    </div>
+
+
+    <script>
+        let prerendered = `
+            <div>
+                <template shadowroot="open">
+                    <p> Dynamically loaded shadow dom </p>
+                </template>
+            </div>
+        `;
+
+        document.getElementById('container').innerHTML = prerendered;
+    </script>
+
 </body>
 
 </html>

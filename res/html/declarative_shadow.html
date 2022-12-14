@@ -20,14 +20,30 @@
     <div class="w50vw col">
         <a href="/" class="code cblue b2">Home</a>
 
-        <div class="bt bc2 m5">
+        <div class="bt bb bc2 m5">
             <p class="code">
-Notes:
+TLDR;
+
+I would not say that this feature is production ready in enough capacity to be useful for outbrain.
+
+The following problems exist: 
+    Injecting HTML with a declarative shadow element will not create a shadow element.
+    The only way to inject it would be using an iFrame which will result in a performance impact
+    While having the advantage of server side rendering, that advantage is negated by a need to use an iframe
+
+            </p>
+
+        </div>
+
+        <p class="code fsz1" id="declarative_support"></p>
+
+        <div class="bt bb bc2 m5">
+            <p class="code">
     To use the declarative shadow DOM you'd use 
         &lttemplate shadowroot="open|closed"&gt&lt/template&gt
             </p>
             <div class="row m0">
-                <p class="code m0">
+                <p class="code m0 fg">
     Using this method will only work on chromium based browsers with these versions and above:
         Google Chrome v90
         Microsoft Edge v90
@@ -43,23 +59,30 @@ Notes:
             <p class="code">
     All of these were released in April of 2021
 
-    Other browsers do not support the shadowroot attribute)
+    Other browsers do not support the shadowroot attribute
     In case of no support the element will be considered a template and not rendered
-
             </p>
+            <div class="row m0">
+                <p class="code m0 fg">
+    A simple polyfill for this does exist.
+        See here <a class="fas fa-arrow-right fsz09"></a>
+                </p>
+                
+                <div class="col jc">
+                    <a href="#polyfill" class="fas fa-link hb1 p10 cblue"></a>
+                </div>
+            </div>
         </div>
 
         <div class="row">
-            <div class="bt bc2 m5 fg">
+            <div class="bt bb bc2 m5 fg">
                 <p class="code c1"> Shadow DOM element using template[shadowroot] </p>
 
                 <div class="p10 b3">
-                    <div class="code c2 fsz125 p10">Hello (class: code c2 fsz125 p10)</div>
-
                     <div>
                         <template shadowroot="open">
                             <div class="code c2 fsz125 p10">Shadow DOM element</div>
-                            <div class="code c2 fsz125 p10">Hello (class: code c2 fsz125 p10)</div>
+                            <div class="code c2 fsz125 p10">Class on this element is: "code c2 fsz125 p10"</div>
                         </template>
                     </div>
                 </div>
@@ -68,8 +91,6 @@ Notes:
         </div>
 
         <div class="code bt bb bc1 nodisplay" id="example_1">
-&lt;div class=&quot;code c2 fsz125 p10&quot;&gt;Hello (class: code c2 fsz125 p10)&lt;/div&gt;
-
 &lt;div&gt;
     &lt;template shadowroot=&quot;open&quot;&gt;
         &lt;div class=&quot;code c2 fsz125 p10&quot;&gt;Shadow DOM element&lt;/div&gt;
@@ -78,22 +99,112 @@ Notes:
 &lt;/div&gt;
         </div>
 
-        <div class="row">
-        <div class="bt bc2 m5">
-            <p class="code c1"> The same shadow dom element inside an iFrame </p>
+    <div class="row">
+        <div class="bt bb bc2 m5 fg">
+            <p class="code c1"> The same shadow dom element inside an iFrame with full HTML markup</p>
 
             <div class="p10 b3">
-                <iframe class="bn pt10 w50vw ba bc2" src="/html/shadow.html"></iframe>
+                <iframe class="bn pt10 ba bc2 w100p" src="/html/shadow.html"></iframe>
             </div>
         </div>
     </div>
 
-        <div class="row">
-            <div class="bt bc2 m5">
+    <div class="row">
+        <div class="bt bb bc2 m5 fg">
+            <p class="code c1"> The same shadow dom element inside an iFrame with only the template code</p>
+
+            <div class="p10 b3">
+                <iframe class="bn pt10 ba bc2 w100p" src="/html/shadow_shallow.html"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="bt bb bc2 fg m5">
+            <p class="code c1">Dynamically loaded declarative shadow dom</p>
+            <div class="p10 b3">
+                <iframe class="bn pt10 ba bc2 w100p" src="/html/dynamic_shadow.html"></iframe>
+            </div>
+        </div>
+        <button class="b2 hb3 b toggle code" data-for="example_3">Show Code</button>
+    </div>
+
+    <div class="code bt bb bc3 nodisplay" id="example_3">
+&lt;div class=&quot;p10 b3&quot;&gt;
+    &lt;div id=&quot;container&quot;&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;script&gt;
+    let prerendered = `
+        &lt;div&gt;
+            &lt;template shadowroot=&quot;open&quot;&gt;
+                &lt;p&gt; Dynamically loaded shadow dom &lt;/p&gt;
+            &lt;/template&gt;
+        &lt;/div&gt;
+    `;
+
+    document.getElementById('container').innerHTML = prerendered;
+&lt;/script&gt;
+    </div>
+    
+    <div class="row">
+        <div class="bt bb bc2 fg m5">
+            <p class="code c1">Dynamically loaded declarative shadow dom in iframe</p>
+            <div class="p10 b3" id="iframe_dynamic"></div>
+        </div>
+        <button class="b2 hb3 b toggle code" data-for="example_4">Show Code</button>
+    </div>
+
+    <div class="code bt bb bc3 nodisplay" id="example_4">
+&lt;script&gt;
+    let iframe = document.createElement('iframe');
+    iframe.src = 'javascript:void(0);'
+    iframe.className = 'bn pt10 ba bc2 w100p'
+
+    document.getElementById('iframe_dynamic').appendChild(iframe);
+
+    iframe.contentWindow.document.open();
+    iframe.contentWindow.document.write(`
+    &lt;div&gt;
+        &lt;template shadowroot=&quot;open&quot;&gt;
+            &lt;div class=&quot;code c2 fsz15 p10&quot;&gt;Shadow DOM element&lt;/div&gt;
+            &lt;div class=&quot;code c2 fsz125 p10&quot;&gt;Class on this element is: &quot;code c2 fsz125 p10&quot;&lt;/div&gt;
+        &lt;/template&gt;
+    &lt;/div&gt;
+    `);
+    iframe.contentWindow.document.close();
+&lt;/script&gt;
+    </div>
+
+    <script>
+        let iframe = document.createElement('iframe');
+        iframe.src = 'javascript:void(0);'
+        iframe.className = 'bn pt10 ba bc2 w100p'
+
+        document.getElementById('iframe_dynamic').appendChild(iframe);
+
+        iframe.contentWindow.document.open();
+        iframe.contentWindow.document.write(`
+        <div>
+            <template shadowroot="open">
+                <div class="code c2 fsz15 p10">Shadow DOM element</div>
+                <div class="code c2 fsz125 p10">Class on this element is: "code c2 fsz125 p10"</div>
+            </template>
+        </div>
+        `);
+        iframe.contentWindow.document.close();
+
+
+    </script>
+
+        <div class="row" id="polyfill">
+            <div class="bt bb bc2 fg m5">
                 <p class="code c1"> Polyfilled shadow DOM element </p>
 
                 <div class="p10 b3">
-                    <iframe class="bn pt10 w50vw ba bc2" src="/html/polyfill_shadow.html"></iframe>
+                    <iframe class="bn pt10 ba bc2 w100p" src="/html/polyfill_shadow.html"></iframe>
                 </div>
             </div>
             <button class="b2 hb3 b toggle code" data-for="example_2">Show Code</button>
@@ -126,13 +237,29 @@ Notes:
 &lt;/script&gt;
         </div>
 
-        <p class="code">
-Note:
-    The polyfill for the code above does appear to work properly and consistently.
-        </p>
+    <div class="bb bt bc2"">            
+        <div class="row m0">
+            <p class="code m0 fg">
+    The polyfill does seem to work properly and efficiently
+        See the linked url for more info <a class="fas fa-arrow-right fsz09"></a>
+            </p>
+            <div class="col jc">
+                <a href="https://web.dev/declarative-shadow-dom/#polyfill" class="fas fa-link hb1 p10 cblue"></a>
+            </div>
+        </div>
+
     </div>
 
+    <div style="padding: 100px 0;"></div>
+
     <script src="/js/toggle.js"></script>
+
+    <script>
+        let supports = HTMLTemplateElement.prototype.hasOwnProperty('shadowRoot') ? '' : ' not';
+
+        document.getElementById('declarative_support').innerHTML = `This browser does${supports} support declarative shadow root`;
+
+    </script>
 </body>
 
 </html>
