@@ -231,7 +231,7 @@ document.getElementById('container').appendChild(...elem.body.children)
             const elem = document.createElement('div');
             const shadow = elem.attachShadow({mode: 'open'});
 
-            shadow.textContent = `
+            shadow.innerHTML = `
                     &lt;p&gt; Dynamically loaded shadow dom &lt;/p&gt;
                     &lt;p&gt; Dynamically loaded shadow dom &lt;/p&gt;
             `;
