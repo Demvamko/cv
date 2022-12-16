@@ -109,16 +109,13 @@ The only possible improvement would be the implementation of server-side renderi
     The primary benefits of server side rendering are the following:
         Better performance for the user
         Avoiding the use of Javascript
+        SEO optimization
         
     Do note that the performance of the server side rendering while increasing the performance of the user's experience does decrease the server's speed therefore incereasing costs.
+
     Considering that without the javascript support the ads will not load at all and we would not be able to polyfill the template code, we do not stand to gain from this feature.
 
-    No additional front-end logic (besides a polyfill) would be required for this implementation.
-
-    The work estimate for the front-end side for implementing this would be very low. 
-    Since I do not know about the exact workings of the back-end in detail I cannot estimate the work that side would require.
-
-
+    Since also our components do not benefit from SEO, we gain no advantage from that.
             </p>
             
         </div>
@@ -133,6 +130,18 @@ The only possible improvement would be the implementation of server-side renderi
     The basics that would be required is adding a polyfill (see <a href="#polyfill" class="cblue code">example 6</a>) and making sure that it triggered whenever a template[shadowroot] is loaded into the page.
 
     Since I do not know about the exact workings of the back-end in detail I cannot estimate the work that side would require.
+            </p>
+            
+        </div>
+
+
+        <div class="bt bb bc2 m5">
+            <p class="fsz125">Further references:</p>
+            <p class="code">
+                <a class="cblue code" href="https://www.wiktorwisniewski.dev/blog/exploring-declarative-shadow-dom">https://www.wiktorwisniewski.dev/blog/exploring-declarative-shadow-dom</a>
+                <a class="cblue code" href="https://web.dev/declarative-shadow-dom/#styling">https://web.dev/declarative-shadow-dom/#styling</a>
+                <a class="cblue code" href="https://github.com/WICG/webcomponents/blob/gh-pages/proposals/Declarative-Shadow-DOM.md">https://github.com/WICG/webcomponents/blob/gh-pages/proposals/Declarative-Shadow-DOM.md</a>
+                <a class="cblue code" href="https://dev.to/steveblue/the-state-of-web-components-in-2022-1ip3">https://dev.to/steveblue/the-state-of-web-components-in-2022-1ip3</a>
             </p>
             
         </div>
@@ -386,6 +395,34 @@ document.getElementById('container').appendChild(...elem.body.children)
 
     document.querySelectorAll('template[shadowroot]').forEach(AttachShadowRoot)
 &lt;/script&gt;
+        </div>
+        
+        <div class="row">
+            <div class="bt bb bc2 fg m5">
+                <p class="code c1"> Example 7: Polyfilled slot based rendering </p>
+
+                <div class="p10 b3">
+                    <iframe class="bn pt10 ba bc2 w100p" src="/html/shadow_slot.html"></iframe>
+                </div>
+                
+                <p class="code">
+                    This element will be rendered in all browsers due to the use of polyfill
+                </p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="bt bb bc2 fg m5">
+                <p class="code c1"> Example 7.1: Slot based rendering </p>
+
+                <div class="p10 b3">
+                    <iframe class="bn pt10 ba bc2 w100p" src="/html/shadow_slot.html"></iframe>
+                </div>
+                
+                <p class="code">
+                    This element will not be rendered in unsuported browsers
+                </p>
+            </div>
         </div>
 
 

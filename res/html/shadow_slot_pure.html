@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrija Kovač</title>
+    <link rel="stylesheet" href="/css/arch.css">
+    <link rel="stylesheet" href="/css/ddark.css">
+    <link rel="stylesheet" href="/css/dsite.css">
+    <link rel="stylesheet" href="/fonts/futura/style.css">
+</head>
+
+<body>
+
+
+    <div class="p10 b3">
+        <div id="container">
+            <template shadowroot="open">
+                <slot name="abc"></slot>
+            </template>
+        </div>
+        
+        <p slot="abc">Slot based rendering</p>
+    </div>
+</body>
+
+</html>
