@@ -21,23 +21,18 @@
         <a href="/" class="code cblue b2">Home</a>
 
         <div class="bt bb bc2 m5">
-            <p class="code">
-TLDR;
-
-I would not say that this feature is production ready in enough capacity to be useful for outbrain.
-
-The following problems exist: 
-    Injecting HTML with a declarative shadow element will not create a shadow element.
-    The only way to inject it would be using an iFrame which will result in a performance impact
-    While having the advantage of server side rendering, that advantage is negated by a need to use an iframe
+            <p class="fsz125">Summary</p>
+            <p class="code">                
+I would suggest against implementing this feature as it does not bring any considerable improvements to the current process, but does impact performance.
+The only possible improvement would be the implementation of server-side rendering for which this feature could be used for future-proofing.
 
             </p>
-
         </div>
 
         <p class="code fsz1" id="declarative_support"></p>
 
         <div class="bt bb bc2 m5">
+            <p class="fsz125">Feature Support</p>
             <p class="code">
     To use the declarative shadow DOM you'd use 
         &lttemplate shadowroot="open|closed"&gt&lt/template&gt
@@ -55,28 +50,60 @@ The following problems exist:
                     <a href="https://caniuse.com/declarative-shadow-dom" class="fas fa-link hb1 p10 cblue"></a>
                 </div>
             </div>
-
             <p class="code">
     All of these were released in April of 2021
 
     Other browsers do not support the shadowroot attribute
     In case of no support the element will be considered a template and not rendered
+    Do note that the implementation of this feature is still highly discussed, and may change for various browsers
             </p>
             <div class="row m0">
                 <p class="code m0 fg">
     A simple polyfill for this does exist.
-        See here <a class="fas fa-arrow-right fsz09"></a>
+        See linked urls for more info <a class="fas fa-arrow-right fsz09"></a>
                 </p>
                 
                 <div class="col jc">
                     <a href="#polyfill" class="fas fa-link hb1 p10 cblue"></a>
+                    <a href="https://web.dev/declarative-shadow-dom/#polyfill" class="fas fa-link hb1 p10 cblue"></a>
                 </div>
             </div>
+
+            <p class="code">
+    Do note that the template[shadowroot] syntax will only be considered a shadow root during the initial HTML parsing stage
+    There is an option to parse it dynamically using the DOMParser class but it does impact performance (see <a href="#example_4_1_h" class="cblue code">example 4.1</a>)
+            </p>
+
+            <p class="code">
+    Mobile devices that use chromium based browsers do support this feature, and those that do not, support the polyfill.
+            </p>
+            
         </div>
+
+        
+        <div class="bt bb bc2 m5">
+            <p class="fsz125">Performance</p>
+            <p class="code">
+    Dynamically loading the declarative shadow DOM element is not quite straightforward.
+
+    You cannot directly insert the html code into DOM (see <a href="#example_4_h" class="cblue code">example 4</a> and <a href="#example_4_1_h" class="cblue code">example 4.1</a>). 
+    Instead you have to use the DOMParser for it to apply as a shadow DOM element or load it in an iFrame (see <a href="#example_2_h" class="cblue code">example 2</a> and <a href="#example_3_h" class="cblue code">example 3</a>)
+
+    This negates the primary benefit of not using javascript to create the shadow dom. 
+    Moreover the performance of using the DOMParser is lower than standard shadow DOM attachment. 
+    Using .attachShadow() is nearly 95% faster in most cases. (see <a href="#example_4_1_h" class="cblue code">example 4.1</a>)
+
+    
+
+
+            </p>
+            
+        </div>
+
 
         <div class="row">
             <div class="bt bb bc2 m5 fg">
-                <p class="code c1"> Shadow DOM element using template[shadowroot] </p>
+                <p class="code c1"> Example 1: Shadow DOM element using template[shadowroot] </p>
 
                 <div class="p10 b3">
                     <div>
@@ -86,6 +113,10 @@ The following problems exist:
                         </template>
                     </div>
                 </div>
+
+                <p class="code">
+                    This element will not render in unsuported browsers
+                </p>
             </div>
             <button class="b2 hb3 b toggle code" data-for="example_1">Show Code</button>
         </div>
@@ -100,31 +131,43 @@ The following problems exist:
         </div>
 
     <div class="row">
-        <div class="bt bb bc2 m5 fg">
-            <p class="code c1"> The same shadow dom element inside an iFrame with full HTML markup</p>
+        <div class="bt bb bc2 m5 fg" id="example_2_h">
+            <p class="code c1"> Example 2: The same shadow dom element inside an iFrame with full HTML markup</p>
 
             <div class="p10 b3">
                 <iframe class="bn pt10 ba bc2 w100p" src="/html/shadow.html"></iframe>
             </div>
+            
+            <p class="code">
+                This element will not render in unsuported browsers
+            </p>
         </div>
     </div>
 
     <div class="row">
-        <div class="bt bb bc2 m5 fg">
-            <p class="code c1"> The same shadow dom element inside an iFrame with only the template code</p>
+        <div class="bt bb bc2 m5 fg" id="example_3_h">
+            <p class="code c1"> Example 3: The same shadow dom element inside an iFrame with only the template code</p>
 
             <div class="p10 b3">
                 <iframe class="bn pt10 ba bc2 w100p" src="/html/shadow_shallow.html"></iframe>
             </div>
+
+            <p class="code">
+                This element will not render in unsuported browsers
+            </p>
         </div>
     </div>
 
     <div class="row">
-        <div class="bt bb bc2 fg m5">
-            <p class="code c1">Dynamically loaded declarative shadow dom</p>
+        <div class="bt bb bc2 fg m5" id="example_4_h">
+            <p class="code c1"> Example 4: Dynamically loaded declarative shadow dom</p>
             <div class="p10 b3">
                 <iframe class="bn pt10 ba bc2 w100p" src="/html/dynamic_shadow.html"></iframe>
             </div>
+            
+            <p class="code">
+                This element will not render at all, as the template is considered just a template and therefore is hidden
+            </p>
         </div>
         <button class="b2 hb3 b toggle code" data-for="example_3">Show Code</button>
     </div>
@@ -148,16 +191,81 @@ The following problems exist:
     document.getElementById('container').innerHTML = prerendered;
 &lt;/script&gt;
     </div>
-    
     <div class="row">
-        <div class="bt bb bc2 fg m5">
-            <p class="code c1">Dynamically loaded declarative shadow dom in iframe</p>
-            <div class="p10 b3" id="iframe_dynamic"></div>
+        <div class="bt bb bc2 fg m5" id="example_4_1_h">
+            <p class="code c1"> Example 4.1: Dynamically loaded declarative shadow dom</p>
+            <div class="p10 b3">
+                <iframe class="bn pt10 ba bc2 w100p" src="/html/dynamic_shadow_correct.html"></iframe>
+            </div>
+            
+            <p class="code">
+                This element will not render in unsuported browsers
+                This uses the correct DOMParser to parse the template[shadowroot] syntax and create the shadow DOM
+                Do note that it is 80-95% slower in execution based on benchmarks ran here: <a href="https://jsbench.me/" class="code cblue">https://jsbench.me/</a>
+            </p>
         </div>
-        <button class="b2 hb3 b toggle code" data-for="example_4">Show Code</button>
+        <div class="col jc fgc">
+            <button class="b2 hb3 b toggle code" data-for="example_4">Show Code</button>
+            <button class="b2 hb3 b toggle code" data-for="testcases" data-hide-text="Hide Test Cases" data-show-text="Show Test Cases">Show Test Cases</button>
+        </div>
     </div>
 
     <div class="code bt bb bc3 nodisplay" id="example_4">
+let prerendered = `
+    &lt;div&gt;
+        &lt;template shadowroot=&quot;open&quot;&gt;
+            &lt;p&gt; Dynamically loaded shadow dom &lt;/p&gt;
+        &lt;/template&gt;
+    &lt;/div&gt;
+`;
+
+let elem = new DOMParser().parseFromString(prerendered, 'text/html', { includeShadowRoots: true});
+
+document.getElementById('container').appendChild(...elem.body.children)
+    </div>
+
+    <div class="code bt bb bc3 nodisplay" id="testcases">
+        Test case 1:
+            const container = document.getElementById('container');
+
+            const elem = document.createElement('div');
+            const shadow = elem.attachShadow({mode: 'open'});
+
+            shadow.textContent = `
+                    &lt;p&gt; Dynamically loaded shadow dom &lt;/p&gt;
+                    &lt;p&gt; Dynamically loaded shadow dom &lt;/p&gt;
+            `;
+
+            container.appendChild(elem);
+
+        Test case 2:
+            const prerendered = `
+            &lt;div&gt;
+                &lt;template shadowroot=&quot;open&quot;&gt;
+                    &lt;p&gt; Dynamically loaded shadow dom &lt;/p&gt;
+                    &lt;p&gt; Dynamically loaded shadow dom &lt;/p&gt;
+                &lt;/template&gt;
+            &lt;/div&gt;
+            `;
+
+            const elem = new DOMParser().parseFromString(prerendered, 'text/html', { includeShadowRoots: true});
+
+            document.getElementById('container').appendChild(...elem.body.children)
+    </div>
+    
+    <div class="row">
+        <div class="bt bb bc2 fg m5">
+            <p class="code c1"> Example 5: Dynamically loaded declarative shadow dom in iframe</p>
+            <div class="p10 b3" id="iframe_dynamic"></div>
+
+            <p class="code">
+                This element will not render in unsuported browsers
+            </p>
+        </div>
+        <button class="b2 hb3 b toggle code" data-for="example_5">Show Code</button>
+    </div>
+
+    <div class="code bt bb bc3 nodisplay" id="example_5">
 &lt;script&gt;
     let iframe = document.createElement('iframe');
     iframe.src = 'javascript:void(0);'
@@ -201,11 +309,16 @@ The following problems exist:
 
         <div class="row" id="polyfill">
             <div class="bt bb bc2 fg m5">
-                <p class="code c1"> Polyfilled shadow DOM element </p>
+                <p class="code c1"> Example 6: Polyfilled shadow DOM element </p>
 
                 <div class="p10 b3">
                     <iframe class="bn pt10 ba bc2 w100p" src="/html/polyfill_shadow.html"></iframe>
                 </div>
+                
+                <p class="code">
+                    This element will be rendered in all browsers due to the use of polyfill
+                    The polyfill does seem to work properly and efficiently
+                </p>
             </div>
             <button class="b2 hb3 b toggle code" data-for="example_2">Show Code</button>
         </div>
@@ -237,18 +350,6 @@ The following problems exist:
 &lt;/script&gt;
         </div>
 
-    <div class="bb bt bc2"">            
-        <div class="row m0">
-            <p class="code m0 fg">
-    The polyfill does seem to work properly and efficiently
-        See the linked url for more info <a class="fas fa-arrow-right fsz09"></a>
-            </p>
-            <div class="col jc">
-                <a href="https://web.dev/declarative-shadow-dom/#polyfill" class="fas fa-link hb1 p10 cblue"></a>
-            </div>
-        </div>
-
-    </div>
 
     <div style="padding: 100px 0;"></div>
 

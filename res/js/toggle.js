@@ -9,11 +9,11 @@ for(let toggle of toggles){
 
         if(elem.style.display == 'none'){
             Open(elem)
-            toggle.innerHTML = "Hide Code"
+            toggle.innerHTML = toggle.dataset.hideText || "Hide Code"
         }
         else{
             Close(elem)
-            toggle.innerHTML = "Show Code"
+            toggle.innerHTML = toggle.dataset.showText || "Show Code"
         }
     }
 }
