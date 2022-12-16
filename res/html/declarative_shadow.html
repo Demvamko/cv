@@ -55,7 +55,9 @@ The only possible improvement would be the implementation of server-side renderi
 
     Other browsers do not support the shadowroot attribute
     In case of no support the element will be considered a template and not rendered
-    Do note that the implementation of this feature is still highly discussed, and may change for various browsers
+
+    Do note that the implementation of this feature is still highly discussed, and may change for various browsers.
+    Safari development team does seem to be in process of implementing the same feature however.
             </p>
             <div class="row m0">
                 <p class="code m0 fg">
@@ -93,13 +95,49 @@ The only possible improvement would be the implementation of server-side renderi
     Moreover the performance of using the DOMParser is lower than standard shadow DOM attachment. 
     Using .attachShadow() is nearly 95% faster in most cases. (see <a href="#example_4_1_h" class="cblue code">example 4.1</a>)
 
-    
+    The loading of the shadow dom during initial parsing of the page (that happens when loading an iframe) has the same performance as when attaching a shadow using .attachShadow()
+    This approach kind of defeats the point of the shadow DOM itself as the iFrame is a separate context in itself.
+
+            </p>
+            
+        </div>
+
+        
+        <div class="bt bb bc2 m5">
+            <p class="fsz125">Server Side Rendering</p>
+            <p class="code">
+    The primary benefits of server side rendering are the following:
+        Better performance for the user
+        Avoiding the use of Javascript
+        
+    Do note that the performance of the server side rendering while increasing the performance of the user's experience does decrease the server's speed therefore incereasing costs.
+    Considering that without the javascript support the ads will not load at all and we would not be able to polyfill the template code, we do not stand to gain from this feature.
+
+    No additional front-end logic (besides a polyfill) would be required for this implementation.
+
+    The work estimate for the front-end side for implementing this would be very low. 
+    Since I do not know about the exact workings of the back-end in detail I cannot estimate the work that side would require.
 
 
             </p>
             
         </div>
 
+        
+        <div class="bt bb bc2 m5">
+            <p class="fsz125">Work Size Estimation</p>
+            <p class="code">
+
+    The work estimate for the front-end side for implementing this would be very low (less than a week).
+    
+    The basics that would be required is adding a polyfill (see <a href="#polyfill" class="cblue code">example 6</a>) and making sure that it triggered whenever a template[shadowroot] is loaded into the page.
+
+    Since I do not know about the exact workings of the back-end in detail I cannot estimate the work that side would require.
+            </p>
+            
+        </div>
+
+        <p class="fsz125">Examples:</p>
 
         <div class="row">
             <div class="bt bb bc2 m5 fg">
